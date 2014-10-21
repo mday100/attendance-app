@@ -1,19 +1,22 @@
-<% content_for :title do %>Foobar Kadigan<% end %>
-<% content_for :description do %>Website of Foobar Kadigan<% end %> 
 <section>
-   <img src="http://lorempixel.com/1170/600/cats/1">
+   <!-- <img src="http://lorempixel.com/1170/600/cats/1"> -->
+   <%= image_tag("logo.jpg") %>
 </section>
 <section>
    <div class="column">
-     <h2>Stay in touch.</h2>
+     <h2>Class Sign In:</h2>
    </div>
    <div class="column">
 	<div class="form-centered">
 		<%= simple_form_for @visitor do |f| %>
 		<%= f.error_notification %>
+		<%= f.input :fname, label: false, 
+		:placeholder => 'Your first name...' %>
+		<%= f.input :lname, label: false, 
+		:placeholder => 'Your last name...' %>
 		<%= f.input :email, label: false, 
-		:placeholder => 'Your email address...' %> <br/>
-		<%= f.button :submit, "Sign up for the newsletter", :class => "submit" %>
+		:placeholder => 'Your email address...' %>
+		<%= f.button :submit, "Press to Submit", :class => "submit" %>
 		<% end %> 
 	</div>
    </div>

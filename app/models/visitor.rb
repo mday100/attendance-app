@@ -1,7 +1,9 @@
 class Visitor < ActiveRecord::Base
 	has_no_table
 	column :email, :string
-	validates_presence_of :email
+	column :fname, :string
+	column :lname, :string
+	validates_presence_of :email, :fname, :lname
 	validates_format_of :email, :with => /\A[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}\z/i
 
 	def subscribe
@@ -9,11 +11,13 @@ class Visitor < ActiveRecord::Base
 		result = mailchimp.lists.subscribe({
 			:id => Rails.application.secrets.mailchimp_list_id, 
 			:email => {:email => self.email},
+			:merge_vars => {:FNAME => self.fname,
+							:LNAME => self.lname},
 			:double_optin => false,
 			:update_existing => true,
 			:send_welcome => true 
 			})
-		Rails.logger.info("Subscribed #{self.email} to MailChimp") if result 
+		Rails.logger.info("#{self.email} just signed in.") if result 
 	end
 
 end
